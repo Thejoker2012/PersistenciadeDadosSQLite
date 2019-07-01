@@ -38,19 +38,42 @@ public class MainActivity extends AppCompatActivity {
             bancoDados.execSQL("CREATE TABLE IF NOT EXISTS pessoas(nome VARCHAR, idade INT(3))");
 
             //Inserindo dados
-           /* bancoDados.execSQL("INSERT INTO pessoas(nome,idade) VALUES('Iago',26)");
-            bancoDados.execSQL("INSERT INTO pessoas(nome,idade) VALUES('Igor',20)");*/
+           /* bancoDados.execSQL("INSERT INTO pessoas(nome,idade) VALUES('Mariana',18)");
+            bancoDados.execSQL("INSERT INTO pessoas(nome,idade) VALUES('Juliana',23)");*/
 
             //Recuperar pessoas
-            Cursor cursor = bancoDados.rawQuery("SELECT nome,idade FROM pessoas",null);
+           /* String consulta = "SELECT nome,idade FROM pessoas" +
+                                " WHERE nome ='Iago' AND idade = 26";*/
+
+            /*String consulta = "SELECT nome,idade FROM pessoas " +
+                              "WHERE idade >= 20 OR idade = 18";*/
+
+            /*String consulta = "SELECT nome,idade FROM pessoas " +
+                    "WHERE idade IN(18,23)";*/
+
+            /*String consulta = "SELECT nome,idade FROM pessoas " +
+                    "WHERE idade BETWEEN 18 AND 23";*/
+
+           /* String filtro = "o";//Pegar resultados da tela
+            String consulta = "SELECT nome FROM pessoas " +
+                    "WHERE nome LIKE '%"+ filtro +"%'";*/
+
+            String filtro = "o";//Pegar resultados da tela
+            String consulta = "SELECT nome,idade FROM pessoas " +
+                    "WHERE 1=1 ORDER BY idade DESC LIMIT 3 ";
+
+            Cursor cursor = bancoDados.rawQuery(consulta,null);
 
             int indiceNome = cursor.getColumnIndex("nome");
             int indiceIdade = cursor.getColumnIndex("idade");
 
             cursor.moveToFirst();
             while (cursor != null){
-                Log.i("RESULTADO - nome: ",cursor.getString(indiceNome));
-                Log.i("RESULTADO - idade: ",cursor.getString(indiceIdade));
+
+                String nome = cursor.getString(indiceNome);
+                String idade = cursor.getString(indiceIdade);
+
+                Log.i("RESULTADO - nome ",nome+" -idade: "+idade);
                 cursor.moveToNext();
             }
 
